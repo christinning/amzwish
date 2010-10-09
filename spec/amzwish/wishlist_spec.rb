@@ -1,11 +1,32 @@
 require 'spec_helper'
+require 'open-uri'
 
 module Amzwish
   describe Wishlist do
-    context "wishlist with one book on it" do
-      it "returns the book" do
-        fixture = Wishlist.new("my@email.com")
-        fixture.books.should == [Book.new("Alice in Wonderland", "123")]
+    context "empty wishlist" do
+      it "returns an empty list of books" do
+        mock_finder = mock(WishlistFinder)
+        mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}])
+        empty_page = open(File.join(PROJECT_DIR, "samples","uk","empty.html")).read
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(empty_page)
+        fixture = Wishlist.new("address@email.com", mock_finder)
+        fixture.books.size.should == 0
+      end
+    end
+    context "multipage wishlist" do
+      it "returns a list of books" do
+        mock_finder = mock(WishlistFinder)
+        mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}]) 
+        page1 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page1.html")).read
+        page2 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page2.html")).read
+        page3 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page3.html")).read
+        page4 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page4.html")).read
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(page1)
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 2).and_return(page2)
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 3).and_return(page3)
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 4).and_return(page4)
+        fixture = Wishlist.new("address@email.com", mock_finder)
+        fixture.books.size.should be > 0
       end
     end
   end
