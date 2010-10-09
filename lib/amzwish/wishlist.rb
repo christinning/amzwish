@@ -1,7 +1,7 @@
 require 'nokogiri'
 module Amzwish
   class Wishlist
-    def initialize(email, finder)
+    def initialize(email, finder = WishlistFinder.new)
       @email = email
       @finder = finder
     end                 

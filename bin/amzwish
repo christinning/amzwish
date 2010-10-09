@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby -wKU
+$LOAD_PATH << File.join(File.dirname(__FILE__), "..", "lib")
+require 'amzwish'
+ 
+finder = Amzwish::WishlistFinder.new
+id = finder.find_for("chris.tinning@gmail.com")[0][:id]
+#p finder.get_page(id, 0)
+
+list = Amzwish::Wishlist.new("chris.tinning@gmail.com")
+list.books.each{ |b| puts b} 
