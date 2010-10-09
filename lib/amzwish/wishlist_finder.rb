@@ -6,16 +6,17 @@ module Amzwish
       DISPLAY_WISHLIST_URL_TEMPLATE = "http://www.amazon.co.uk/registry/wishlist/%s"
       
       def post(email)
-        r = RestClient.post FIND_WISHLIST_URL, "field-name" => email do |resp| 
+        r = RestClient.post( FIND_WISHLIST_URL, "field-name" => email ) do |resp| 
           {:code => resp.code, :headers=>resp.headers}
         end
       end
       
       def get(wishlist_id, page)
         url = generate_url_for_wishlist(wishlist_id)
-        params = { :page => page, :_encoding => 'UTF8', :filter => '3', :sort=> 'date-added', :layout => 'compact', :reveal => 'unpurchased'}
-        RestClient.get(url, params) do |resp|
-          raise "could not find page" unless resp.code == 200 
+        params = { :page => page, :_encoding => 'UTF8', :filter => '3', :sort=> 'date-added',
+          :layout => 'compact', :reveal => 'unpurchased'}
+        RestClient.get( url, params ) do |resp|
+          raise "could not find wishlist" unless resp.code == 200 
           resp.body
         end
       end
@@ -23,8 +24,7 @@ module Amzwish
       private 
       def generate_url_for_wishlist(id)
         sprintf(DISPLAY_WISHLIST_URL_TEMPLATE, id)
-      end
-      
+      end    
     end
     
     
