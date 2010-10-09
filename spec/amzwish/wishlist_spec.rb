@@ -23,7 +23,18 @@ module Amzwish
         fixture = Wishlist.new("address@email.com", mock_finder)
         books = fixture.books
         books.size.should == 1
-        books[0].title.should == "Language Myths"
+        books[0].title.should == "Language Myths"     
+      end
+      
+      it "should be enumerable" do
+        mock_finder = mock(WishlistFinder)
+        mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}])
+        page = open(File.join(PROJECT_DIR, "samples","uk","single-item.html")).read
+        mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(page)
+        fixture = Wishlist.new("address@email.com", mock_finder)
+        books = []
+        fixture.each_book{|b| books << b}
+        books.size.should == 1
         
       end 
     end

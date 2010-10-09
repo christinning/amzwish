@@ -3,4 +3,4 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), "..", "lib")
 require 'amzwish'
 
 list = Amzwish::Wishlist.new("chris.tinning@gmail.com")
-list.books.each{ |b| puts b} 
+list.each{ |b| puts b} 
