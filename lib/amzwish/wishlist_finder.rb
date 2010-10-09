@@ -28,7 +28,7 @@ module Amzwish
     end
     
     
-    def initialize(rest_client)
+    def initialize(rest_client = RestClientWrapper.new)
       @rest_client = rest_client
     end            
     

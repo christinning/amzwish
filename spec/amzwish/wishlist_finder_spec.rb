@@ -37,7 +37,7 @@ module Amzwish
     end 
     
     context "examples that make actual web requests" do 
-      let(:fixture){ WishlistFinder.new(WishlistFinder::RestClientWrapper.new) }
+      let(:fixture){ WishlistFinder.new() }
       example "get wishlist html" do
         fixture.get_page("34VGL4IX1RMYO", 1).should =~ /Chris Tinning/
       end
