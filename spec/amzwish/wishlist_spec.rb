@@ -8,6 +8,5 @@ module Amzwish
         fixture.books.should == [Book.new("Alice in Wonderland", "123")]
       end
     end
-  
   end
 end
