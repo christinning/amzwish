@@ -21,10 +21,13 @@ Gem::Specification.new do |s|
     ".autotest",
      ".gitignore",
      ".rvmrc",
+     "LICENSE",
+     "README.rdoc",
+     "Rakefile",
      "VERSION",
+     "amzwish.gemspec",
      "autotest/discover.rb",
      "bin/amzwish",
-     "keys.rb",
      "lib/amzwish.rb",
      "lib/amzwish/book.rb",
      "lib/amzwish/services/website_wrapper.rb",
@@ -63,18 +66,15 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<nokogiri>, [">= 0"])
       s.add_runtime_dependency(%q<rest-client>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<nokogiri>, [">= 0"])
-      s.add_dependency(%q<nokogiri>, [">= 0"])
       s.add_dependency(%q<rest-client>, [">= 0"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<nokogiri>, [">= 0"])
     s.add_dependency(%q<rest-client>, [">= 0"])
   end
