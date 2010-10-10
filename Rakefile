@@ -11,12 +11,12 @@ begin
     gem.homepage = "http://github.com/tinman/amzwish"
     gem.authors = ["Chris Tinning"]
     gem.add_development_dependency "rspec"
-    gem.add_development_dependency "nokogiri"
     gem.add_dependency "nokogiri"
     gem.add_dependency "rest-client"
     gem.executables << "amzwish"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
