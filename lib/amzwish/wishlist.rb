@@ -2,9 +2,9 @@ require 'nokogiri'
 module Amzwish
   class Wishlist
     include Enumerable
-    def initialize(email, finder = WishlistFinder.new)
+    def initialize(email, website = WebsiteWrapper.new)
       @email = email
-      @finder = finder
+      @website = website
     end                 
     
     def books
@@ -12,7 +12,7 @@ module Amzwish
     end
     
     def each
-       lists = @finder.find_for(@email)
+       lists = @website.find_for(@email)
        each_page(lists[0][:id]){|p| p.books.each{|b| yield b}}
     end
     alias_method :each_book, :each
@@ -22,7 +22,7 @@ module Amzwish
       has_more_pages = true
       page_num = 1
       while(has_more_pages) do
-        page =  Page.new(@finder.get_page(wishlist_id, page_num))
+        page =  Page.new(@website.get_page(wishlist_id, page_num))
         yield page 
         has_more_pages = page.has_next?
         page_num += 1                      

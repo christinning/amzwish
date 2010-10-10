@@ -5,7 +5,7 @@ module Amzwish
   describe Wishlist do
     context "empty wishlist" do
       it "returns an empty list of books" do
-        mock_finder = mock(WishlistFinder)
+        mock_finder = mock(Services::WebsiteWrapper)
         mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}])
         empty_page = open(File.join(PROJECT_DIR, "samples","uk","empty.html")).read
         mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(empty_page)
@@ -16,7 +16,7 @@ module Amzwish
     
     context "single item wishlist" do
       it "returns a list of books" do
-        mock_finder = mock(WishlistFinder)
+        mock_finder = mock(Services::WebsiteWrapper)
         mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}])
         page = open(File.join(PROJECT_DIR, "samples","uk","single-item.html")).read
         mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(page)
@@ -27,7 +27,7 @@ module Amzwish
       end
       
       it "should be enumerable" do
-        mock_finder = mock(WishlistFinder)
+        mock_finder = mock(Services::WebsiteWrapper)
         mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}])
         page = open(File.join(PROJECT_DIR, "samples","uk","single-item.html")).read
         mock_finder.should_receive(:get_page).with("WISHLIST-ID", 1).and_return(page)
@@ -41,7 +41,7 @@ module Amzwish
     
     context "multipage wishlist" do
       it "returns a list of books" do
-        mock_finder = mock(WishlistFinder)
+        mock_finder = mock(Services::WebsiteWrapper)
         mock_finder.should_receive(:find_for).with("address@email.com").and_return([{:id=>"WISHLIST-ID"}]) 
         page1 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page1.html")).read
         page2 = open(File.join(PROJECT_DIR, "samples","uk","multipage-page2.html")).read
