@@ -13,8 +13,8 @@ module Amzwish
         resp = @rest_client.post(email)
         # If a user has a single public wishlist then should get a redirect to it
         if (resp[:code] == 302)
-          /(\?|&)id=(?<wishlist_id>\w*)/ =~ resp[:headers][:location]
-          [{:id => wishlist_id}]
+          /(?:\?|&)id=(\w*)/ =~ resp[:headers][:location]
+          [{:id => $~[1]}]
         else
           []
         end
@@ -27,7 +27,7 @@ module Amzwish
     
     class RestClientWrapper
       def post(email)
-        r = RestClient.post( FIND_WISHLIST_URL, "field-name" => email ) do |resp| 
+        r = RestClient.post( WebsiteWrapper::FIND_WISHLIST_URL, "field-name" => email ) do |resp, req, result| 
           {:code => resp.code, :headers=>resp.headers}
         end
       end
@@ -36,7 +36,7 @@ module Amzwish
         url = generate_url_for_wishlist(wishlist_id)
         params = { :page => page, :_encoding => 'UTF8', :filter => '3', :sort=> 'date-added',
           :layout => 'compact', :reveal => 'unpurchased'}
-        RestClient.get( url, :params => params ) do |resp, req|
+        RestClient.get( url, :params => params ) do |resp, req, result|
           raise "could not find wishlist" unless resp.code == 200 
           resp.body
         end
@@ -44,7 +44,7 @@ module Amzwish
 
       private 
       def generate_url_for_wishlist(id)
-        sprintf(DISPLAY_WISHLIST_URL_TEMPLATE, id)
+        sprintf(WebsiteWrapper::DISPLAY_WISHLIST_URL_TEMPLATE, id)
       end    
     end
   end

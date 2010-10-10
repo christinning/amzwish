@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module Amzwish
   module Services 
-    PREVENT_WEB_REQUESTS = true
+    PREVENT_WEB_REQUESTS = false
   
     describe WebsiteWrapper do 
     
