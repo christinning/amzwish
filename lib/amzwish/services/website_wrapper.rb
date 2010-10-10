@@ -2,6 +2,9 @@ require 'rest_client'
 module Amzwish
   module Services
     class WebsiteWrapper
+      FIND_WISHLIST_URL = "http://www.amazon.co.uk/gp/registry/search.html?ie=UTF8&type=wishlist"
+      DISPLAY_WISHLIST_URL_TEMPLATE = "http://www.amazon.co.uk/registry/wishlist/%s"
+      
       def initialize(rest_client = RestClientWrapper.new)
         @rest_client = rest_client
       end            
@@ -22,9 +25,6 @@ module Amzwish
     end
     
     class RestClientWrapper
-      FIND_WISHLIST_URL = "http://www.amazon.co.uk/gp/registry/search.html?ie=UTF8&type=wishlist"
-      DISPLAY_WISHLIST_URL_TEMPLATE = "http://www.amazon.co.uk/registry/wishlist/%s"
-
       def post(email)
         r = RestClient.post( FIND_WISHLIST_URL, "field-name" => email ) do |resp| 
           {:code => resp.code, :headers=>resp.headers}
