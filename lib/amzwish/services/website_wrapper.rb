@@ -11,6 +11,7 @@ module Amzwish
 
       def find_for(email)
         resp = @rest_client.post(email)
+        # If a user has a single public wishlist then should get a redirect to it
         if (resp[:code] == 302)
           /(\?|&)id=(?<wishlist_id>\w*)/ =~ resp[:headers][:location]
           [{:id => wishlist_id}]
