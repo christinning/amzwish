@@ -34,10 +34,10 @@ module Amzwish
       end
     end
     
-    describe "the a page with one item on it" do
+    describe "a page with one item on it" do
       let(:fixture){ create_page_from("single-item.html") }
       it "should return the correct book" do 
-        fixture.books[0].should == Book.new("Language Myths", "0140260234")
+        fixture.books.first.should == Book.new("Language Myths", "0140260234")
       end
     end
     
