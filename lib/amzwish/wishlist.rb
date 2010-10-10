@@ -2,7 +2,7 @@ require 'nokogiri'
 module Amzwish
   class Wishlist
     include Enumerable
-    def initialize(email, website = WebsiteWrapper.new)
+    def initialize(email, website = Services::WebsiteWrapper.new)
       @email = email
       @website = website
     end                 
