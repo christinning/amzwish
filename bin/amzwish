@@ -2,5 +2,5 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), "..", "lib")
 require 'amzwish'
 
-list = Amzwish::Wishlist.new(ARGV[0])
-list.each{ |b| puts b} 
+lists = Amzwish::Wishlist.find(ARGV[0])
+lists.each{ |l| l.each{ |b| puts b}} 

@@ -17,13 +17,15 @@ module Amzwish
           end
         end
         describe "single wishlist found" do
-          it "should return an array with one hash" do
+          it "should return an array with one wishlist" do
             mock_client.should_receive(:post).with("address@email.com").and_return(
               { :code => 302, 
                 :headers=> {
                   :location=>"http://www.amazon.co.uk/gp/registry/registry.html/276-3987950-0414363?ie=UTF8&type=wishlist&id=WISH_LIST_ID"}
                   })
-            fixture.find_for("address@email.com").should == [{:id=>"WISH_LIST_ID"}]
+            result = fixture.find_for("address@email.com")
+            result.size.should == 1
+            result[0].class.should == Wishlist
           end
         end
       end
@@ -42,8 +44,8 @@ module Amzwish
         example "get wishlist html" do
           fixture.get_page("34VGL4IX1RMYO", 1).should =~ /Chris Tinning/
         end
-        example "get wishlist id" do
-          fixture.find_for("chris.tinning@gmail.com").should == [{:id=>"34VGL4IX1RMYO"}]
+        example "get wishlist" do
+          fixture.find_for("chris.tinning@gmail.com")[0].list_id.should == "34VGL4IX1RMYO" 
         end
       end unless PREVENT_WEB_REQUESTS                          
     end

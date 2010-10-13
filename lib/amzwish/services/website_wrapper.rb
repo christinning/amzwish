@@ -14,7 +14,8 @@ module Amzwish
         # If a user has a single public wishlist then should get a redirect to it
         if (resp[:code] == 302)
           /(?:\?|&)id=(\w*)/ =~ resp[:headers][:location]
-          [{:id => $~[1]}]
+          wishlist_id = $~[1]
+          [Wishlist.new(email, wishlist_id, self)]
         else
           []
         end
